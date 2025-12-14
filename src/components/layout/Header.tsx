@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { ShoppingCart, Menu, X, User, Search, ChevronDown } from 'lucide-react'
@@ -31,7 +32,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-neutral-200">
       {/* Announcement Bar */}
-      <div className="bg-primary-600 text-white text-center py-2 px-4 text-sm">
+      <div className="bg-neutral-800 text-white text-center py-2 px-4 text-sm">
         <p>We will beat any written price for any new miner! Contact us today.</p>
       </div>
 
@@ -39,8 +40,15 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-xl font-bold text-primary-600">ShopCrypto</span>
+            <Link href="/" className="flex items-center space-x-3">
+              <Image
+                src="/logo.jpg"
+                alt="ShopCrypto"
+                width={50}
+                height={50}
+                className="rounded"
+              />
+              <span className="text-xl font-bold text-neutral-800">ShopCrypto</span>
             </Link>
           </div>
 

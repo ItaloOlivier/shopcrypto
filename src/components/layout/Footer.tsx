@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Facebook, Linkedin, Mail, Phone, MapPin } from 'lucide-react'
 
 const footerLinks = {
@@ -23,7 +24,16 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-primary-400">ShopCrypto</h3>
+            <div className="flex items-center space-x-3">
+              <Image
+                src="/logo.jpg"
+                alt="ShopCrypto"
+                width={50}
+                height={50}
+                className="rounded"
+              />
+              <h3 className="text-xl font-bold text-white">ShopCrypto</h3>
+            </div>
             <p className="text-neutral-400 text-sm">
               South Africa&apos;s leading supplier of cryptocurrency mining hardware.
               We source the best miners at competitive prices.
@@ -33,7 +43,7 @@ export function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-primary-400 transition-colors"
+                className="text-neutral-400 hover:text-white transition-colors"
               >
                 <Facebook className="h-5 w-5" />
               </a>
@@ -41,7 +51,7 @@ export function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-primary-400 transition-colors"
+                className="text-neutral-400 hover:text-white transition-colors"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
@@ -87,7 +97,7 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Contact Us</h4>
             <ul className="space-y-3">
               <li className="flex items-start space-x-3">
-                <Mail className="h-5 w-5 text-primary-400 flex-shrink-0 mt-0.5" />
+                <Mail className="h-5 w-5 text-white flex-shrink-0 mt-0.5" />
                 <a
                   href="mailto:connect@outsourcedcto.co.za"
                   className="text-neutral-400 hover:text-white text-sm transition-colors"
@@ -96,7 +106,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-start space-x-3">
-                <Phone className="h-5 w-5 text-primary-400 flex-shrink-0 mt-0.5" />
+                <Phone className="h-5 w-5 text-white flex-shrink-0 mt-0.5" />
                 <a
                   href="tel:+27791922423"
                   className="text-neutral-400 hover:text-white text-sm transition-colors"
@@ -105,7 +115,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-primary-400 flex-shrink-0 mt-0.5" />
+                <MapPin className="h-5 w-5 text-white flex-shrink-0 mt-0.5" />
                 <span className="text-neutral-400 text-sm">
                   94 Woodlands Circle, Pecanwood,<br />
                   Broederstroom, North West,<br />
@@ -127,7 +137,7 @@ export function Footer() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-2 rounded-md bg-neutral-800 border border-neutral-700 text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                className="flex-1 px-4 py-2 rounded-md bg-neutral-800 border border-neutral-700 text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-500 text-sm"
               />
               <button
                 type="submit"

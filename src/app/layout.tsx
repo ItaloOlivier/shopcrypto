@@ -11,11 +11,17 @@ export const metadata: Metadata = {
   title: 'ShopCrypto - Cryptocurrency Mining Hardware | South Africa',
   description: 'South Africa\'s leading supplier of cryptocurrency mining hardware. ASIC miners, accessories, and hosting services. Bitmain, IceRiver, Whatsminer available.',
   keywords: 'crypto mining, ASIC miners, Bitcoin mining, South Africa, Bitmain, Antminer, Whatsminer, IceRiver',
+  icons: {
+    icon: '/logo.jpg',
+    shortcut: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
   openGraph: {
     title: 'ShopCrypto - Cryptocurrency Mining Hardware',
     description: 'South Africa\'s leading supplier of cryptocurrency mining hardware.',
     type: 'website',
     locale: 'en_ZA',
+    images: ['/logo-large.jpg'],
   },
 }
 
