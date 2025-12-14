@@ -6,6 +6,9 @@ import { prisma } from '@/lib/prisma'
 import { formatPrice } from '@/lib/utils'
 import { AddToCartButton } from '@/components/products/AddToCartButton'
 
+// Force dynamic rendering - don't cache at build time
+export const dynamic = 'force-dynamic'
+
 interface ProductPageProps {
   params: { slug: string }
 }

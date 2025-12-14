@@ -3,6 +3,9 @@ import { ArrowRight, Zap, Shield, Truck, Headphones } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import { ProductGrid } from '@/components/products/ProductGrid'
 
+// Force dynamic rendering - don't cache at build time
+export const dynamic = 'force-dynamic'
+
 async function getFeaturedProducts() {
   try {
     const products = await prisma.product.findMany({

@@ -2,6 +2,9 @@ import { Suspense } from 'react'
 import { prisma } from '@/lib/prisma'
 import { ProductGrid } from '@/components/products/ProductGrid'
 
+// Force dynamic rendering - don't cache at build time
+export const dynamic = 'force-dynamic'
+
 interface ProductsPageProps {
   searchParams: { category?: string; search?: string; sort?: string; page?: string }
 }
