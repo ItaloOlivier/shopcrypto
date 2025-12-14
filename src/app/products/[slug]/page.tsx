@@ -2,9 +2,11 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ShoppingCart, Check, X } from 'lucide-react'
+import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import { formatPrice } from '@/lib/utils'
 import { AddToCartButton } from '@/components/products/AddToCartButton'
+import { ProductJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd'
 
 // Force dynamic rendering - don't cache at build time
 export const dynamic = 'force-dynamic'
@@ -22,6 +24,62 @@ async function getProduct(slug: string) {
     return product
   } catch {
     return null
+  }
+}
+
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+  const product = await getProduct(params.slug)
+
+  if (!product) {
+    return {
+      title: 'Product Not Found',
+    }
+  }
+
+  const description = product.description
+    ? product.description.slice(0, 160)
+    : `Buy ${product.name} in South Africa. ${product.hashrate ? `Hashrate: ${product.hashrate}. ` : ''}${product.algorithm ? `Algorithm: ${product.algorithm}. ` : ''}Best prices guaranteed at ShopCrypto.`
+
+  return {
+    title: `${product.name} | Buy in South Africa`,
+    description,
+    keywords: [
+      product.name,
+      product.vendor || '',
+      product.algorithm || '',
+      'buy crypto miner South Africa',
+      'ASIC miner',
+      'cryptocurrency mining',
+    ].filter(Boolean),
+    openGraph: {
+      title: `${product.name} - ShopCrypto South Africa`,
+      description,
+      type: 'website',
+      url: `https://shopcrypto.co.za/products/${product.slug}`,
+      images: [
+        {
+          url: product.images[0]?.startsWith('http')
+            ? product.images[0]
+            : `https://shopcrypto.co.za${product.images[0]}`,
+          width: 800,
+          height: 800,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} - ShopCrypto`,
+      description,
+      images: [
+        product.images[0]?.startsWith('http')
+          ? product.images[0]
+          : `https://shopcrypto.co.za${product.images[0]}`,
+      ],
+    },
+    alternates: {
+      canonical: `https://shopcrypto.co.za/products/${product.slug}`,
+    },
   }
 }
 
@@ -61,17 +119,59 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const specs = product.specs as Record<string, string> | null
 
+  const breadcrumbItems = [
+    { name: 'Home', url: 'https://shopcrypto.co.za' },
+    { name: 'Products', url: 'https://shopcrypto.co.za/products' },
+    ...(product.category
+      ? [{ name: product.category.name, url: `https://shopcrypto.co.za/products?category=${product.category.slug}` }]
+      : []),
+    { name: product.name, url: `https://shopcrypto.co.za/products/${product.slug}` },
+  ]
+
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+    <>
+      <ProductJsonLd
+        product={{
+          name: product.name,
+          description: product.description || `${product.name} - High-performance cryptocurrency miner available at ShopCrypto South Africa.`,
+          image: product.images[0] || '/logo.jpg',
+          sku: product.slug,
+          price: Number(product.price),
+          compareAtPrice: product.compareAtPrice ? Number(product.compareAtPrice) : undefined,
+          stock: product.stock,
+          vendor: product.vendor || undefined,
+          category: product.category?.name,
+          hashrate: product.hashrate || undefined,
+          algorithm: product.algorithm || undefined,
+        }}
+      />
+      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8" itemScope itemType="https://schema.org/Product">
       {/* Breadcrumb */}
-      <nav className="mb-8">
-        <Link
-          href="/products"
-          className="inline-flex items-center text-sm text-neutral-600 hover:text-primary-600"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Products
-        </Link>
+      <nav aria-label="Breadcrumb" className="mb-8">
+        <ol className="flex items-center space-x-2 text-sm text-neutral-600">
+          <li>
+            <Link href="/" className="hover:text-primary-600">Home</Link>
+          </li>
+          <li><span className="mx-2">/</span></li>
+          <li>
+            <Link href="/products" className="hover:text-primary-600">Products</Link>
+          </li>
+          {product.category && (
+            <>
+              <li><span className="mx-2">/</span></li>
+              <li>
+                <Link href={`/products?category=${product.category.slug}`} className="hover:text-primary-600">
+                  {product.category.name}
+                </Link>
+              </li>
+            </>
+          )}
+          <li><span className="mx-2">/</span></li>
+          <li className="text-neutral-900 font-medium truncate max-w-[200px]" aria-current="page">
+            {product.name}
+          </li>
+        </ol>
       </nav>
 
       <div className="grid lg:grid-cols-2 gap-12">
@@ -272,6 +372,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </section>
       )}
-    </div>
+    </article>
+    </>
   )
 }

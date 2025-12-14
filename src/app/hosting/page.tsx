@@ -1,10 +1,47 @@
 import Link from 'next/link'
+import { Metadata } from 'next'
 import { Zap, Shield, ThermometerSun, Server, Clock, MapPin, Phone, Mail } from 'lucide-react'
+import { ServiceJsonLd, FAQJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd'
 
-export const metadata = {
-  title: 'Crypto Miner Hosting South Africa | ShopCrypto',
-  description: 'Professional cryptocurrency miner hosting in Johannesburg, South Africa. R2/kWh electricity, load shedding protection, cooling included. Host your ASIC miners with us.',
+export const metadata: Metadata = {
+  title: 'Crypto Miner Hosting South Africa | R2/kWh | ShopCrypto',
+  description: 'Professional cryptocurrency miner hosting in Johannesburg, South Africa. R2/kWh all-inclusive electricity, load shedding protection, cooling included. Host your ASIC miners with us.',
+  keywords: [
+    'miner hosting South Africa',
+    'crypto hosting Johannesburg',
+    'ASIC hosting',
+    'Bitcoin miner hosting',
+    'mining colocation',
+    'load shedding protected mining',
+  ],
+  alternates: {
+    canonical: 'https://shopcrypto.co.za/hosting',
+  },
+  openGraph: {
+    title: 'Crypto Miner Hosting - R2/kWh | ShopCrypto',
+    description: 'Professional miner hosting in Johannesburg. R2/kWh all-inclusive, load shedding protected.',
+    url: 'https://shopcrypto.co.za/hosting',
+  },
 }
+
+const hostingFaqs = [
+  {
+    question: 'What is the cost of miner hosting in South Africa?',
+    answer: 'Our hosting rate is R2 per kWh, all-inclusive. This covers electricity, cooling, security, and 24/7 monitoring.',
+  },
+  {
+    question: 'Is your facility protected from load shedding?',
+    answer: 'Yes, our Johannesburg facility operates independently from the grid, ensuring your miners run 24/7 without interruption from load shedding.',
+  },
+  {
+    question: 'Can I visit my miners at your facility?',
+    answer: 'Yes, our facility is conveniently located in Johannesburg with easy access for site visits and equipment delivery.',
+  },
+  {
+    question: 'What support do you provide for hosted miners?',
+    answer: 'We provide professional installation, 24/7 monitoring, regular maintenance and cleaning, and remote access to your miners.',
+  },
+]
 
 const features = [
   {
@@ -39,9 +76,22 @@ const features = [
   },
 ]
 
+const breadcrumbItems = [
+  { name: 'Home', url: 'https://shopcrypto.co.za' },
+  { name: 'Miner Hosting', url: 'https://shopcrypto.co.za/hosting' },
+]
+
 export default function HostingPage() {
   return (
-    <div className="bg-white">
+    <>
+      <ServiceJsonLd
+        name="Cryptocurrency Miner Hosting"
+        description="Professional ASIC miner hosting in Johannesburg, South Africa. R2/kWh all-inclusive rate with load shedding protection, cooling, security, and 24/7 monitoring."
+        price="R2 per kWh"
+      />
+      <FAQJsonLd faqs={hostingFaqs} />
+      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <div className="bg-white">
       {/* Hero Section */}
       <section className="bg-neutral-900 text-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -209,6 +259,26 @@ export default function HostingPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-neutral-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-neutral-900 text-center mb-12">
+            Hosting FAQs
+          </h2>
+          <div className="max-w-3xl mx-auto space-y-6">
+            {hostingFaqs.map((faq, index) => (
+              <div key={index} className="bg-white rounded-lg p-6 shadow-sm">
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                  {faq.question}
+                </h3>
+                <p className="text-neutral-600">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
+    </>
   )
 }

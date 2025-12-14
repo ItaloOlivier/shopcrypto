@@ -1,0 +1,25 @@
+{
+  "name": "ShopCrypto - Cryptocurrency Mining Hardware",
+  "short_name": "ShopCrypto",
+  "description": "South Africa's leading supplier of cryptocurrency mining hardware. ASIC miners, accessories, and hosting services.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#171717",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ],
+  "categories": ["shopping", "business", "finance"],
+  "lang": "en-ZA",
+  "dir": "ltr"
+}

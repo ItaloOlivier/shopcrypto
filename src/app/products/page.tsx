@@ -1,12 +1,49 @@
 import { Suspense } from 'react'
+import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import { ProductGrid } from '@/components/products/ProductGrid'
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd'
 
 // Force dynamic rendering - don't cache at build time
 export const dynamic = 'force-dynamic'
 
 interface ProductsPageProps {
   searchParams: { category?: string; search?: string; sort?: string; page?: string }
+}
+
+export async function generateMetadata({ searchParams }: ProductsPageProps): Promise<Metadata> {
+  const category = searchParams.category
+
+  if (category) {
+    const categoryData = await prisma.category.findUnique({ where: { slug: category } })
+    if (categoryData) {
+      return {
+        title: `${categoryData.name} - Buy Crypto Miners South Africa`,
+        description: categoryData.description || `Buy ${categoryData.name} in South Africa. Best prices on ASIC miners, cryptocurrency mining hardware. ShopCrypto - your trusted crypto mining supplier.`,
+        alternates: {
+          canonical: `https://shopcrypto.co.za/products?category=${category}`,
+        },
+        openGraph: {
+          title: `${categoryData.name} - ShopCrypto South Africa`,
+          description: categoryData.description || `Buy ${categoryData.name} in South Africa. Best prices guaranteed.`,
+          url: `https://shopcrypto.co.za/products?category=${category}`,
+        },
+      }
+    }
+  }
+
+  return {
+    title: 'All Crypto Mining Products | ASIC Miners South Africa',
+    description: 'Browse our complete range of cryptocurrency mining hardware. ASIC miners from Bitmain, Whatsminer, IceRiver. New and second-hand miners available. Best prices in South Africa.',
+    alternates: {
+      canonical: 'https://shopcrypto.co.za/products',
+    },
+    openGraph: {
+      title: 'Crypto Mining Products - ShopCrypto South Africa',
+      description: 'Browse our complete range of cryptocurrency mining hardware. Best prices in South Africa.',
+      url: 'https://shopcrypto.co.za/products',
+    },
+  }
 }
 
 async function getProducts(searchParams: ProductsPageProps['searchParams']) {
@@ -79,8 +116,39 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
 
   const currentCategory = categories.find((c) => c.slug === searchParams.category)
 
+  const breadcrumbItems = [
+    { name: 'Home', url: 'https://shopcrypto.co.za' },
+    { name: 'Products', url: 'https://shopcrypto.co.za/products' },
+    ...(currentCategory
+      ? [{ name: currentCategory.name, url: `https://shopcrypto.co.za/products?category=${currentCategory.slug}` }]
+      : []),
+  ]
+
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+    <>
+      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+      {/* Breadcrumb Navigation */}
+      <nav aria-label="Breadcrumb" className="mb-4">
+        <ol className="flex items-center space-x-2 text-sm text-neutral-600">
+          <li>
+            <a href="/" className="hover:text-primary-600">Home</a>
+          </li>
+          <li><span className="mx-2">/</span></li>
+          <li>
+            <a href="/products" className={currentCategory ? 'hover:text-primary-600' : 'text-neutral-900 font-medium'}>
+              Products
+            </a>
+          </li>
+          {currentCategory && (
+            <>
+              <li><span className="mx-2">/</span></li>
+              <li className="text-neutral-900 font-medium">{currentCategory.name}</li>
+            </>
+          )}
+        </ol>
+      </nav>
+
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-neutral-900">
@@ -177,5 +245,6 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         </div>
       </div>
     </div>
+    </>
   )
 }

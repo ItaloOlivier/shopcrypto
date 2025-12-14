@@ -2,9 +2,33 @@ import Link from 'next/link'
 import { ArrowRight, Zap, Shield, Truck, Headphones } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import { ProductGrid } from '@/components/products/ProductGrid'
+import { FAQJsonLd } from '@/components/seo/JsonLd'
 
 // Force dynamic rendering - don't cache at build time
 export const dynamic = 'force-dynamic'
+
+const homepageFaqs = [
+  {
+    question: 'Where can I buy cryptocurrency mining hardware in South Africa?',
+    answer: 'ShopCrypto is South Africa\'s leading supplier of cryptocurrency mining hardware. We offer ASIC miners from Bitmain, Whatsminer, and IceRiver with delivery across South Africa.',
+  },
+  {
+    question: 'What is the best Bitcoin miner to buy in South Africa?',
+    answer: 'The Bitmain Antminer S21 series and Whatsminer M50 series are currently among the most efficient Bitcoin miners available. Contact us for current pricing and availability.',
+  },
+  {
+    question: 'Do you offer miner hosting services in South Africa?',
+    answer: 'Yes, we offer professional miner hosting in Johannesburg at R2 per kWh, including cooling, security, and 24/7 monitoring. Our facility is load-shedding protected.',
+  },
+  {
+    question: 'What warranty do you offer on mining hardware?',
+    answer: 'All new miners come with a 6-month warranty. We also offer technical support to help you get your mining operation running smoothly.',
+  },
+  {
+    question: 'Can you beat competitor prices on new miners?',
+    answer: 'Yes! We will beat any written price for any new miner. Contact us with a competitor quote and we\'ll match or beat it.',
+  },
+]
 
 async function getFeaturedProducts() {
   try {
@@ -88,7 +112,9 @@ export default async function HomePage() {
   const displayProducts = featuredProducts.length > 0 ? featuredProducts : latestProducts
 
   return (
-    <div>
+    <>
+      <FAQJsonLd faqs={homepageFaqs} />
+      <div>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white">
         <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-10" />
@@ -218,6 +244,26 @@ export default async function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-neutral-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-neutral-900 text-center mb-12">
+            Frequently Asked Questions
+          </h2>
+          <div className="max-w-3xl mx-auto space-y-6">
+            {homepageFaqs.map((faq, index) => (
+              <div key={index} className="bg-white rounded-lg p-6 shadow-sm">
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                  {faq.question}
+                </h3>
+                <p className="text-neutral-600">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
+    </>
   )
 }
