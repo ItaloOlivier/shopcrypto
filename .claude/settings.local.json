@@ -9,7 +9,14 @@
       "Bash(npx prisma generate)",
       "Bash(npm run build:*)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: ShopCrypto e-commerce store\n\n- Next.js 14 with TypeScript and Tailwind CSS\n- PostgreSQL database with Prisma ORM\n- User authentication with NextAuth.js\n- Shopping cart with localStorage persistence\n- Product catalog with categories and filters\n- Checkout flow with order management\n- Admin dashboard for product management\n- Static pages (Contact, Refund Policy, Terms)\n- Seed data with 38 products from original store\n- Railway deployment configuration\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: ShopCrypto e-commerce store\n\n- Next.js 14 with TypeScript and Tailwind CSS\n- PostgreSQL database with Prisma ORM\n- User authentication with NextAuth.js\n- Shopping cart with localStorage persistence\n- Product catalog with categories and filters\n- Checkout flow with order management\n- Admin dashboard for product management\n- Static pages (Contact, Refund Policy, Terms)\n- Seed data with 38 products from original store\n- Railway deployment configuration\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(railway login:*)",
+      "Bash(npm run db:push:*)",
+      "Bash(npm run db:seed:*)",
+      "Bash(npx prisma studio)",
+      "Bash(npx tsx:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
