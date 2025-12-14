@@ -20,6 +20,7 @@ const navigation = [
       { name: 'Accessories', href: '/products?category=accessories' },
     ],
   },
+  { name: 'Miner Hosting', href: '/hosting' },
   { name: 'Contact', href: '/contact' },
 ]
 

@@ -11,6 +11,7 @@ const footerLinks = {
   ],
   company: [
     { name: 'About Us', href: '/about' },
+    { name: 'Miner Hosting', href: '/hosting' },
     { name: 'Contact', href: '/contact' },
     { name: 'Refund Policy', href: '/refund-policy' },
     { name: 'Terms of Service', href: '/terms' },
