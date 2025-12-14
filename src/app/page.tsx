@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Zap, Shield, Truck, Headphones } from 'lucide-react'
+import { ArrowRight, Zap, Shield, Truck, Headphones, Cpu, RefreshCw, Cable } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import { ProductGrid } from '@/components/products/ProductGrid'
 import { FAQJsonLd } from '@/components/seo/JsonLd'
@@ -87,19 +87,25 @@ const categories = [
     name: 'New Miners',
     description: 'Latest ASIC miners from top manufacturers',
     href: '/products?category=new-miners',
-    image: '/images/new-miners.jpg',
+    icon: Cpu,
+    gradient: 'from-primary-600 to-primary-800',
+    iconBg: 'bg-primary-500/30',
   },
   {
     name: 'Second Hand',
     description: 'Quality pre-owned miners at great prices',
     href: '/products?category=second-hand-miners',
-    image: '/images/second-hand.jpg',
+    icon: RefreshCw,
+    gradient: 'from-accent-500 to-accent-700',
+    iconBg: 'bg-accent-400/30',
   },
   {
     name: 'Accessories',
     description: 'Cooling, cables, and mining essentials',
     href: '/products?category=accessories',
-    image: '/images/accessories.jpg',
+    icon: Cable,
+    gradient: 'from-neutral-700 to-neutral-900',
+    iconBg: 'bg-neutral-500/30',
   },
 ]
 
@@ -178,19 +184,32 @@ export default async function HomePage() {
               <Link
                 key={category.name}
                 href={category.href}
-                className="group relative overflow-hidden rounded-lg bg-neutral-900 aspect-[4/3]"
+                className={`group relative overflow-hidden rounded-xl bg-gradient-to-br ${category.gradient} aspect-[4/3] shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1`}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                {/* Decorative pattern */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-white rounded-full -translate-y-1/2 translate-x-1/2" />
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-white rounded-full translate-y-1/2 -translate-x-1/2" />
+                </div>
+
+                {/* Icon */}
+                <div className="absolute top-6 right-6">
+                  <div className={`${category.iconBg} p-4 rounded-xl backdrop-blur-sm`}>
+                    <category.icon className="h-8 w-8 text-white" />
+                  </div>
+                </div>
+
+                {/* Content */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6">
-                  <h3 className="text-xl font-bold text-white group-hover:text-primary-400 transition-colors">
+                  <h3 className="text-2xl font-bold text-white group-hover:text-white/90 transition-colors">
                     {category.name}
                   </h3>
-                  <p className="text-neutral-300 text-sm mt-1">
+                  <p className="text-white/80 text-sm mt-2">
                     {category.description}
                   </p>
-                  <span className="mt-3 inline-flex items-center text-primary-400 text-sm font-medium">
+                  <span className="mt-4 inline-flex items-center text-white font-medium text-sm bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg w-fit group-hover:bg-white/30 transition-colors">
                     Shop Now
-                    <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
               </Link>
