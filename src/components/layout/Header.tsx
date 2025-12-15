@@ -47,7 +47,7 @@ export function Header() {
                 alt="ShopCrypto"
                 width={50}
                 height={50}
-                className="rounded grayscale brightness-0"
+                className="rounded"
               />
               <span className="text-xl font-bold text-neutral-800">ShopCrypto</span>
             </Link>
