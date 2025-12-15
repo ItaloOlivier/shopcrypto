@@ -26,15 +26,13 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="bg-neutral-900 rounded overflow-hidden">
-                <Image
-                  src="/logo.jpg"
-                  alt="ShopCrypto"
-                  width={50}
-                  height={50}
-                  className="grayscale invert"
-                />
-              </div>
+              <Image
+                src="/logo.jpg"
+                alt="ShopCrypto"
+                width={50}
+                height={50}
+                className="rounded grayscale invert"
+              />
               <h3 className="text-xl font-bold text-white">ShopCrypto</h3>
             </div>
             <p className="text-neutral-400 text-sm">
